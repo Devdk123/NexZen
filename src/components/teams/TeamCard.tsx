@@ -79,3 +79,4 @@ export function TeamCard({ team, onRequest, hasRequested }: TeamCardProps) {
     </motion.div>
   );
 }
+

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, CheckCircle, Github, Linkedin, Instagram, Youtube, Globe, Plus, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, Code2, Briefcase, Camera, Video, Globe, Plus, X } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../components/ui/Toast';
 import { applicationService } from '../services/applications';
@@ -200,10 +200,10 @@ export default function ApplyPage() {
                   {step === 3 && <>
                     <p className="text-xs text-nexzen-muted">All fields are optional but help you stand out.</p>
                     {[
-                      { key: 'github', icon: <Github size={15} />, label: 'GitHub URL', placeholder: 'https://github.com/username' },
-                      { key: 'linkedin', icon: <Linkedin size={15} />, label: 'LinkedIn URL', placeholder: 'https://linkedin.com/in/username' },
-                      { key: 'instagram', icon: <Instagram size={15} />, label: 'Instagram URL', placeholder: 'https://instagram.com/username' },
-                      { key: 'youtube', icon: <Youtube size={15} />, label: 'YouTube URL', placeholder: 'https://youtube.com/channel/...' },
+                      { key: 'github', icon: <Code2 size={15} />, label: 'GitHub URL', placeholder: 'https://github.com/username' },
+                      { key: 'linkedin', icon: <Briefcase size={15} />, label: 'LinkedIn URL', placeholder: 'https://linkedin.com/in/username' },
+                      { key: 'instagram', icon: <Camera size={15} />, label: 'Instagram URL', placeholder: 'https://instagram.com/username' },
+                      { key: 'youtube', icon: <Video size={15} />, label: 'YouTube URL', placeholder: 'https://youtube.com/channel/...' },
                       { key: 'portfolio', icon: <Globe size={15} />, label: 'Portfolio Website', placeholder: 'https://yoursite.com' },
                     ].map(({ key, icon, label, placeholder }) => (
                       <div key={key} className="relative">

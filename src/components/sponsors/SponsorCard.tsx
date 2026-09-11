@@ -40,3 +40,4 @@ export function SponsorCard({ sponsor, compact = false }: SponsorCardProps) {
     </div>
   );
 }
+

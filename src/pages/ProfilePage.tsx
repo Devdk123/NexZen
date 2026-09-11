@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Instagram, Youtube, Globe, Edit, ExternalLink } from 'lucide-react';
+import { Code2, Briefcase, Camera, Video, Globe, Edit, ExternalLink } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
@@ -48,10 +48,10 @@ export default function ProfilePage() {
   const { score } = getProfileCompleteness(displayUser as any);
 
   const socialLinks = [
-    { href: displayUser.github, icon: <Github size={16} />, label: 'GitHub' },
-    { href: displayUser.linkedin, icon: <Linkedin size={16} />, label: 'LinkedIn' },
-    { href: displayUser.instagram, icon: <Instagram size={16} />, label: 'Instagram' },
-    { href: displayUser.youtube, icon: <Youtube size={16} />, label: 'YouTube' },
+    { href: displayUser.github, icon: <Code2 size={16} />, label: 'GitHub' },
+    { href: displayUser.linkedin, icon: <Briefcase size={16} />, label: 'LinkedIn' },
+    { href: displayUser.instagram, icon: <Camera size={16} />, label: 'Instagram' },
+    { href: displayUser.youtube, icon: <Video size={16} />, label: 'YouTube' },
     { href: displayUser.portfolio, icon: <Globe size={16} />, label: 'Portfolio' },
   ].filter((s) => s.href);
 
