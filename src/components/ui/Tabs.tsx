@@ -61,3 +61,4 @@ export function Tabs({ tabs, defaultTab, className, onChange }: TabsProps) {
     </div>
   );
 }
+

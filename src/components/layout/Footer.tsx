@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Globe, MessageCircle, Star, Zap, Send } from 'lucide-react';
+import { Github, Linkedin, Instagram, Youtube, Zap, Send } from 'lucide-react';
 import { useState } from 'react';
 
 export function Footer() {
@@ -34,10 +34,10 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-3">
               {[
-                { href: '#', icon: <Globe size={18} />, label: 'GitHub' },
-                { href: '#', icon: <MessageCircle size={18} />, label: 'LinkedIn' },
-                { href: '#', icon: <Star size={18} />, label: 'Instagram' },
-                { href: '#', icon: <Zap size={18} />, label: 'YouTube' },
+                { href: '#', icon: <Github size={18} />, label: 'GitHub' },
+                { href: '#', icon: <Linkedin size={18} />, label: 'LinkedIn' },
+                { href: '#', icon: <Instagram size={18} />, label: 'Instagram' },
+                { href: '#', icon: <Youtube size={18} />, label: 'YouTube' },
               ].map((s) => (
                 <a key={s.label} href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer"
                   className="p-2 rounded-lg text-nexzen-subtle hover:text-nexzen-accent hover:bg-nexzen-accent/10 transition-all border border-white/8 hover:border-nexzen-accent/30">
@@ -130,3 +130,4 @@ export function Footer() {
     </footer>
   );
 }
+

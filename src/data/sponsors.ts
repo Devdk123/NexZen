@@ -92,3 +92,4 @@ export const MOCK_SPONSORS: Sponsor[] = [
     tier: 'bronze',
   },
 ];
+

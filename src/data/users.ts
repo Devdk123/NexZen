@@ -354,3 +354,4 @@ export const MOCK_NOTIFICATIONS: Notification[] = [
     link: '/hackathons',
   },
 ];
+

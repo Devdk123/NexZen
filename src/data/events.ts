@@ -262,3 +262,4 @@ export const MOCK_EVENTS: Event[] = [
     createdAt: '2025-04-15T00:00:00',
   },
 ];
+

@@ -1,36 +1,19 @@
 {
-  "name": "nexzen",
+  "name": "nexzen-monorepo",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "version": "1.0.0",
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "oxlint",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@hookform/resolvers": "^5.9.1",
-    "@supabase/supabase-js": "^2.116.0",
-    "@tailwindcss/forms": "^0.5.11",
-    "clsx": "^2.1.1",
-    "date-fns": "^4.4.0",
-    "framer-motion": "^13.2.0",
-    "lucide-react": "^1.44.0",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-hook-form": "^7.87.0",
-    "react-router-dom": "^7.18.3",
-    "tailwind-merge": "^3.6.0",
-    "zod": "^4.6.2"
+    "dev": "concurrently \"npm run dev --workspace client\" \"npm run dev --workspace server\"",
+    "build": "npm run build --workspace client && npm run build --workspace server",
+    "lint": "npm run lint --workspace client",
+    "test": "npm run test --workspace client -- --run",
+    "setup:env": "node -e \"const fs=require('fs'); const files=['.env.example','client/.env.example','server/.env.example']; files.forEach(f=>{ if(!fs.existsSync(f)) console.log('missing', f); });\""
   },
   "devDependencies": {
-    "@types/node": "^24.13.3",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.7",
-    "@vitejs/plugin-react": "^6.1.1",
-    "oxlint": "^1.81.0",
-    "typescript": "~6.0.2",
-    "vite": "^8.3.0"
+    "concurrently": "^9.1.2"
   }
 }

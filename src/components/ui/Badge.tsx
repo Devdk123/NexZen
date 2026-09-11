@@ -67,3 +67,4 @@ export function Tag({ children, active, onClick, className }: TagProps) {
     </span>
   );
 }
+

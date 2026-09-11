@@ -172,3 +172,4 @@ export function getProfileCompleteness(user: {
   const missing = checks.filter((c) => !c.check).map((c) => c.label);
   return { score: Math.round((passed.length / checks.length) * 100), missing };
 }
+

@@ -120,3 +120,4 @@ export function FileUpload({ label, accept, maxSize = 5 * 1024 * 1024, onChange,
     </div>
   );
 }
+

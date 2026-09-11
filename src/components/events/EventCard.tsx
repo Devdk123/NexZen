@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, MapPin, Users, ArrowRight, Wifi } from 'lucide-react';
+import { Calendar, MapPin, Users, Tag, ArrowRight, Wifi, Globe, DollarSign, Monitor } from 'lucide-react';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
-import { cn, formatDate, REG_STATUS_COLORS } from '../../utils';
+import { cn, formatDate, MODE_LABELS, REG_STATUS_COLORS } from '../../utils';
 import type { Event } from '../../types';
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -105,3 +105,4 @@ export function EventCard({ event: e, className }: EventCardProps) {
     </motion.div>
   );
 }
+

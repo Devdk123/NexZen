@@ -58,3 +58,4 @@ export const eventService = {
     return MOCK_EVENTS.filter((e) => e.isFeatured);
   },
 };
+

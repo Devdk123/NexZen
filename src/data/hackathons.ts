@@ -845,3 +845,4 @@ export const MOCK_HACKATHONS: Hackathon[] = [
     createdAt: '2025-08-01T00:00:00',
   },
 ];
+

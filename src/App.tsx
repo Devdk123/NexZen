@@ -1,60 +1,39 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { Suspense, type ReactNode } from 'react';
+import { lazy, Suspense, type ReactNode } from 'react';
 import { AuthProvider } from './context/AuthContext';
 import { NotificationsProvider } from './context/NotificationsContext';
 import { ToastProvider } from './components/ui/Toast';
 import { Layout } from './components/layout/Layout';
 import { PageSkeleton } from './components/ui/Skeleton';
 import { useAuth } from './context/AuthContext';
-import { getSupabaseSetupHint } from './lib/supabase';
 
-const createPage = (title: string) => () => {
-  const setupHint = getSupabaseSetupHint();
+// ─── Lazy-loaded pages ───────────────────────────────────────────────────────
+const LandingPage         = lazy(() => import('./pages/LandingPage'));
+const LoginPage           = lazy(() => import('./pages/LoginPage'));
+const SignUpPage          = lazy(() => import('./pages/SignUpPage'));
+const ForgotPasswordPage  = lazy(() => import('./pages/ForgotPasswordPage'));
+const HackathonsPage      = lazy(() => import('./pages/HackathonsPage'));
+const HackathonDetailPage = lazy(() => import('./pages/HackathonDetailPage'));
+const ApplyPage           = lazy(() => import('./pages/ApplyPage'));
+const EventsPage          = lazy(() => import('./pages/EventsPage'));
+const EventDetailPage     = lazy(() => import('./pages/EventDetailPage'));
+const SponsorsPage        = lazy(() => import('./pages/SponsorsPage'));
+const DashboardPage       = lazy(() => import('./pages/DashboardPage'));
+const ProfilePage         = lazy(() => import('./pages/ProfilePage'));
+const EditProfilePage     = lazy(() => import('./pages/EditProfilePage'));
+const MyApplicationsPage  = lazy(() => import('./pages/MyApplicationsPage'));
+const MyTeamsPage         = lazy(() => import('./pages/MyTeamsPage'));
+const SavedHackathonsPage = lazy(() => import('./pages/SavedHackathonsPage'));
+const CreateTeamPage      = lazy(() => import('./pages/CreateTeamPage'));
+const JoinTeamPage        = lazy(() => import('./pages/JoinTeamPage'));
+const AboutPage           = lazy(() => import('./pages/AboutPage'));
+const ContactPage         = lazy(() => import('./pages/ContactPage'));
+const FAQPage             = lazy(() => import('./pages/FAQPage'));
+const TermsPage           = lazy(() => import('./pages/TermsPage'));
+const PrivacyPage         = lazy(() => import('./pages/PrivacyPage'));
+const NotFoundPage        = lazy(() => import('./pages/NotFoundPage'));
 
-  return (
-    <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="glass rounded-3xl border border-white/10 p-6 md:p-10 shadow-card-hover">
-        <p className="text-xs uppercase tracking-[0.24em] text-nexzen-accent">Nexzen</p>
-        <h1 className="mt-3 text-3xl font-black text-white sm:text-4xl">{title}</h1>
-        <p className="mt-4 max-w-2xl text-sm text-nexzen-muted sm:text-base">
-          This page is ready for real product features. Connect your Supabase project using the environment variables to enable backend-powered data and auth.
-        </p>
-        {setupHint && (
-          <div className="mt-6 rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-200">
-            {setupHint}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const LandingPage = createPage('Welcome to Nexzen');
-const HackathonsPage = createPage('Hackathons');
-const HackathonDetailPage = createPage('Hackathon Details');
-const EventsPage = createPage('Events');
-const EventDetailPage = createPage('Event Details');
-const LoginPage = createPage('Login');
-const SignUpPage = createPage('Sign Up');
-const ForgotPasswordPage = createPage('Reset Password');
-const ProfilePage = createPage('Profile');
-const EditProfilePage = createPage('Edit Profile');
-const ApplyPage = createPage('Apply to Hackathon');
-const CreateTeamPage = createPage('Create Team');
-const JoinTeamPage = createPage('Join Team');
-const MyApplicationsPage = createPage('My Applications');
-const MyTeamsPage = createPage('My Teams');
-const SavedHackathonsPage = createPage('Saved Hackathons');
-const DashboardPage = createPage('Dashboard');
-const SponsorsPage = createPage('Sponsors');
-const AboutPage = createPage('About');
-const ContactPage = createPage('Contact');
-const FAQPage = createPage('FAQ');
-const TermsPage = createPage('Terms');
-const PrivacyPage = createPage('Privacy');
-const NotFoundPage = createPage('Page Not Found');
-
-// ─── Protected Route ──────────────────────────────────────
+// ─── Route Guards ────────────────────────────────────────────────────────────
 function ProtectedRoute({ children }: { children: ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) return <PageSkeleton />;
@@ -62,7 +41,6 @@ function ProtectedRoute({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
-// ─── Auth Route (redirect if already logged in) ───────────
 function AuthRoute({ children }: { children: ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
   if (isLoading) return null;
@@ -70,12 +48,13 @@ function AuthRoute({ children }: { children: ReactNode }) {
   return <>{children}</>;
 }
 
+// ─── Routes ──────────────────────────────────────────────────────────────────
 function AppRoutes() {
   return (
     <Suspense fallback={<PageSkeleton />}>
       <Routes>
         <Route element={<Layout />}>
-          {/* Public */}
+          {/* ── Public ─────────────────────────────────── */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/hackathons" element={<HackathonsPage />} />
           <Route path="/hackathons/:slug" element={<HackathonDetailPage />} />
@@ -87,24 +66,27 @@ function AppRoutes() {
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
-          <Route path="/teams/join" element={<JoinTeamPage />} />
+          <Route path="/404" element={<NotFoundPage />} />
 
-          {/* Auth pages */}
+          {/* ── Auth (redirect if logged in) ───────────── */}
           <Route path="/login" element={<AuthRoute><LoginPage /></AuthRoute>} />
           <Route path="/signup" element={<AuthRoute><SignUpPage /></AuthRoute>} />
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/forgot-password" element={<AuthRoute><ForgotPasswordPage /></AuthRoute>} />
 
-          {/* Protected */}
+          {/* ── Apply (allow without login, handled in page) */}
+          <Route path="/hackathons/:slug/apply" element={<ProtectedRoute><ApplyPage /></ProtectedRoute>} />
+
+          {/* ── Protected ───────────────────────────────── */}
           <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
           <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="/profile/edit" element={<ProtectedRoute><EditProfilePage /></ProtectedRoute>} />
-          <Route path="/hackathons/:slug/apply" element={<ProtectedRoute><ApplyPage /></ProtectedRoute>} />
-          <Route path="/teams/create" element={<ProtectedRoute><CreateTeamPage /></ProtectedRoute>} />
           <Route path="/my/applications" element={<ProtectedRoute><MyApplicationsPage /></ProtectedRoute>} />
           <Route path="/my/teams" element={<ProtectedRoute><MyTeamsPage /></ProtectedRoute>} />
-          <Route path="/my/saved" element={<SavedHackathonsPage />} />
+          <Route path="/my/saved" element={<ProtectedRoute><SavedHackathonsPage /></ProtectedRoute>} />
+          <Route path="/teams/create" element={<ProtectedRoute><CreateTeamPage /></ProtectedRoute>} />
+          <Route path="/teams/join" element={<ProtectedRoute><JoinTeamPage /></ProtectedRoute>} />
 
-          {/* 404 */}
+          {/* ── Catch-all ───────────────────────────────── */}
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
@@ -112,16 +94,17 @@ function AppRoutes() {
   );
 }
 
+// ─── Root App ────────────────────────────────────────────────────────────────
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <NotificationsProvider>
-          <ToastProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <NotificationsProvider>
             <AppRoutes />
-          </ToastProvider>
-        </NotificationsProvider>
-      </AuthProvider>
+          </NotificationsProvider>
+        </AuthProvider>
+      </ToastProvider>
     </BrowserRouter>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { X, Plus } from 'lucide-react';
 import { cn } from '../../utils';
 import { Tag } from './Badge';
@@ -98,3 +98,4 @@ export function MultiSelect({ label, options, selected, onChange, error, hint, m
     </div>
   );
 }
+

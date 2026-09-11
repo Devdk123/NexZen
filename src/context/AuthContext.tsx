@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import type { User, LoginCredentials, SignUpData } from '../types';
+import type { User } from '../types';
 import { authService } from '../services/auth';
+import type { LoginCredentials, SignUpData } from '../services/auth';
 
 interface AuthContextValue {
   user: User | null;
@@ -69,3 +70,4 @@ export function useAuth() {
   if (!ctx) throw new Error('useAuth must be used inside AuthProvider');
   return ctx;
 }
+

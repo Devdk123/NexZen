@@ -9,16 +9,16 @@ export function Layout() {
   const showFooter = !noFooterRoutes.includes(location.pathname);
 
   return (
-    <div className="min-h-screen flex flex-col bg-nexzen-bg text-nexzen-text">
+    <div className="min-h-screen flex flex-col bg-nexzen-bg">
       <Navbar />
       <AnimatePresence mode="wait">
         <motion.main
           key={location.pathname}
           className="flex-1 pt-16"
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -12 }}
-          transition={{ duration: 0.3, ease: 'easeOut' }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.25 }}
         >
           <Outlet />
         </motion.main>
@@ -27,3 +27,4 @@ export function Layout() {
     </div>
   );
 }
+

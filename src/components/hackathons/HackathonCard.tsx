@@ -1,9 +1,9 @@
-import { useState, type MouseEvent } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  Calendar, MapPin, Users, Trophy, Bookmark, BookmarkCheck,
-  Wifi, Clock, ArrowRight, Globe
+  Calendar, MapPin, Users, Trophy, Bookmark, BookmarkCheck, Tag,
+  Monitor, Wifi, Clock, ArrowRight, Globe
 } from 'lucide-react';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
@@ -28,7 +28,7 @@ export function HackathonCard({ hackathon: h, featured, className }: HackathonCa
   const [saved, setSaved] = useState(hackathonService.isSaved(h.id));
   const { success } = useToast();
 
-  const handleSave = (e: MouseEvent) => {
+  const handleSave = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (saved) {
@@ -200,3 +200,4 @@ export function HackathonCard({ hackathon: h, featured, className }: HackathonCa
     </motion.div>
   );
 }
+

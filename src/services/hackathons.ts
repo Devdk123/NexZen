@@ -116,3 +116,4 @@ export const hackathonService = {
     return MOCK_HACKATHONS.filter((h) => ids.includes(h.id));
   },
 };
+

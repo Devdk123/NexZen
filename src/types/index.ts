@@ -379,3 +379,4 @@ export interface TeamFormData {
   hackathonId: string;
   members: Omit<TeamMember, 'id'>[];
 }
+
