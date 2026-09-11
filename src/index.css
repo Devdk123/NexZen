@@ -41,6 +41,34 @@
     overflow-x: hidden;
   }
 
+  a {
+    position: relative;
+    transition: color 180ms ease, transform 180ms ease;
+  }
+
+  a:not([class*='button'])::after {
+    content: '';
+    position: absolute;
+    left: 0.25rem;
+    right: 0.25rem;
+    bottom: -0.15rem;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: right;
+    background: linear-gradient(90deg, var(--accent), var(--cyan));
+    transition: transform 220ms ease;
+  }
+
+  a:not([class*='button']):hover {
+    transform: translateY(-1px);
+  }
+
+  a:not([class*='button']):hover::after,
+  a:not([class*='button']):focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
@@ -72,6 +100,41 @@
 }
 
 @layer components {
+  .interactive-button {
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  .interactive-button::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(115deg, transparent 25%, rgba(255, 255, 255, 0.2), transparent 60%);
+    transform: translateX(-120%);
+    transition: transform 500ms ease;
+  }
+
+  .interactive-button:hover::before {
+    transform: translateX(120%);
+  }
+
+  .cursor-follower {
+    position: fixed;
+    top: -18px;
+    left: -18px;
+    z-index: 70;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(6, 182, 212, 0.42);
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.2), transparent 68%);
+    box-shadow: 0 0 28px rgba(99, 102, 241, 0.18);
+    pointer-events: none;
+    mix-blend-mode: screen;
+    will-change: transform;
+  }
   /* Glass card */
   .glass {
     background: rgba(255, 255, 255, 0.03);
@@ -189,4 +252,19 @@
   /* Hide scrollbar */
   .no-scrollbar::-webkit-scrollbar { display: none; }
   .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-follower {
+    display: none;
+  }
+
+  a,
+  .interactive-button {
+    transition: none;
+  }
+
+  a:not([class*='button']):hover {
+    transform: none;
+  }
 }

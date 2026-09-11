@@ -44,9 +44,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <motion.button
         ref={ref}
+        whileHover={{ y: -2, rotateX: 2, rotateY: -2, scale: 1.02 }}
         whileTap={{ scale: 0.97 }}
         className={cn(
-          'inline-flex items-center justify-center font-medium border transition-all duration-200 select-none cursor-pointer',
+          'interactive-button inline-flex items-center justify-center font-medium border transition-all duration-200 select-none cursor-pointer',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-nexzen-accent focus-visible:ring-offset-1 focus-visible:ring-offset-nexzen-bg',
           'disabled:opacity-50 disabled:pointer-events-none',
           variants[variant],
