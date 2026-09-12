@@ -7,11 +7,15 @@ import { useNotifications } from '../context/NotificationsContext';
 import { applicationService } from '../services/applications';
 import { teamService } from '../services/teams';
 import { hackathonService } from '../services/hackathons';
+import { getUserTeam } from '../services/teamSupabase';
 import { HackathonCard } from '../components/hackathons/HackathonCard';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
 import { cn, timeAgo, STATUS_LABELS, STATUS_COLORS, getProfileCompleteness } from '../utils';
 import type { Application, Team, Hackathon } from '../types';
+import { TeamSelectionPopup } from '../components/TeamSelectionPopup';
+import { CreateTeamModal } from '../components/CreateTeamModal';
+import JoinTeamModal from '../components/JoinTeamModal';
 
 function greeting() {
   const h = new Date().getHours();
@@ -28,12 +32,28 @@ export default function DashboardPage() {
   const [recommended, setRecommended] = useState<Hackathon[]>([]);
   const [savedCount, setSavedCount] = useState(0);
 
+  // Team popup state
+  const [showTeamPopup, setShowTeamPopup] = useState(false);
+  const [showCreateTeam, setShowCreateTeam] = useState(false);
+  const [showJoinTeam, setShowJoinTeam] = useState(false);
+  const [checkingTeam, setCheckingTeam] = useState(true);
+
   useEffect(() => {
     if (!user) return;
     applicationService.getMyApplications(user.id).then(setApplications);
     teamService.getMyTeams(user.id).then(setTeams);
     hackathonService.getAll({ registrationStatus: 'open', sortBy: 'popular' }).then((h) => setRecommended(h.slice(0, 3)));
     setSavedCount(hackathonService.getSavedIds().length);
+
+    // Check if user already has a team
+    getUserTeam(user.id, user.email).then((existingTeam) => {
+      if (!existingTeam) {
+        setShowTeamPopup(true);
+      }
+      setCheckingTeam(false);
+    }).catch(() => {
+      setCheckingTeam(false);
+    });
   }, [user]);
 
   if (!user) return null;
@@ -50,7 +70,37 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-nexzen-bg bg-grid">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20">
+      {/* Team Selection Popup - shows when user has no team */}
+      {showTeamPopup && !showCreateTeam && !showJoinTeam && (
+        <TeamSelectionPopup
+          onCreateTeam={() => { setShowTeamPopup(false); setShowCreateTeam(true); }}
+          onJoinTeam={() => { setShowTeamPopup(false); setShowJoinTeam(true); }}
+        />
+      )}
+
+      {/* Create Team Modal */}
+      {showCreateTeam && (
+        <CreateTeamModal
+          user={user}
+          onClose={() => { setShowCreateTeam(false); }}
+          onSuccess={(teamCode) => {
+            setShowCreateTeam(false);
+          }}
+        />
+      )}
+
+      {/* Join Team Modal */}
+      {showJoinTeam && (
+        <JoinTeamModal
+          user={user}
+          onClose={() => { setShowJoinTeam(false); }}
+          onSuccess={() => {
+            setShowJoinTeam(false);
+          }}
+        />
+      )}
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
         {/* Welcome */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex items-center justify-between mb-8 flex-wrap gap-4">
           <div className="flex items-center gap-4">

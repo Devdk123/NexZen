@@ -56,7 +56,13 @@ export default function SignUpPage() {
   const handleSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault();
     const e = validate();
-    if (Object.keys(e).length > 0) { setErrors(e); return; }
+    if (Object.keys(e).length > 0) { 
+      setErrors(e); 
+      if (e.terms) {
+        toastError('Action Required', 'Please agree to the Terms of Service & Privacy Policy to create your account.');
+      }
+      return; 
+    }
     setErrors({});
     setLoading(true);
     try {

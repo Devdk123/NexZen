@@ -17,12 +17,19 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // If viewing own profile, use currentUser directly
+    if (currentUser && currentUser.id === id) {
+      setProfile(currentUser);
+      setLoading(false);
+      return;
+    }
+    // For other users, try MOCK_USERS fallback (or Supabase in the future)
     setTimeout(() => {
       const found = MOCK_USERS.find((u) => u.id === id) || null;
       setProfile(found);
       setLoading(false);
     }, 400);
-  }, [id]);
+  }, [id, currentUser]);
 
   if (loading) {
     return (
