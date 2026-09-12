@@ -38,6 +38,13 @@ ALTER TABLE teams ENABLE ROW LEVEL SECURITY;
 ALTER TABLE team_members ENABLE ROW LEVEL SECURITY;
 
 -- Policies
+DROP POLICY IF EXISTS "Anyone can read teams" ON teams;
+DROP POLICY IF EXISTS "Authenticated users can create teams" ON teams;
+DROP POLICY IF EXISTS "Leader can update own team" ON teams;
+DROP POLICY IF EXISTS "Anyone can read team_members" ON team_members;
+DROP POLICY IF EXISTS "Authenticated users can add members" ON team_members;
+DROP POLICY IF EXISTS "Can delete members from own team" ON team_members;
+
 CREATE POLICY "Anyone can read teams" ON teams FOR SELECT USING (true);
 CREATE POLICY "Authenticated users can create teams" ON teams FOR INSERT WITH CHECK (auth.role() = 'authenticated');
 CREATE POLICY "Leader can update own team" ON teams FOR UPDATE USING (leader_user_id = auth.uid());

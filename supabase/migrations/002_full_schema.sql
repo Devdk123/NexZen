@@ -180,26 +180,44 @@ ALTER TABLE applications ENABLE ROW LEVEL SECURITY;
 ALTER TABLE saved_hackathons ENABLE ROW LEVEL SECURITY;
 ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
 
--- Profiles: Anyone can read, users can update their own
+-- Profiles
+DROP POLICY IF EXISTS "Public profiles are viewable by everyone" ON profiles;
+DROP POLICY IF EXISTS "Users can insert their own profile" ON profiles;
+DROP POLICY IF EXISTS "Users can update own profile" ON profiles;
+
 CREATE POLICY "Public profiles are viewable by everyone" ON profiles FOR SELECT USING (true);
 CREATE POLICY "Users can insert their own profile" ON profiles FOR INSERT WITH CHECK (auth.uid() = id);
 CREATE POLICY "Users can update own profile" ON profiles FOR UPDATE USING (auth.uid() = id);
 
--- Hackathons & Events: Publicly readable
+-- Hackathons & Events
+DROP POLICY IF EXISTS "Hackathons are viewable by everyone" ON hackathons;
+DROP POLICY IF EXISTS "Events are viewable by everyone" ON events;
+
 CREATE POLICY "Hackathons are viewable by everyone" ON hackathons FOR SELECT USING (true);
 CREATE POLICY "Events are viewable by everyone" ON events FOR SELECT USING (true);
 
--- Applications: Users can read/write their own
+-- Applications
+DROP POLICY IF EXISTS "Users can view own applications" ON applications;
+DROP POLICY IF EXISTS "Users can insert own applications" ON applications;
+DROP POLICY IF EXISTS "Users can update own applications" ON applications;
+
 CREATE POLICY "Users can view own applications" ON applications FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can insert own applications" ON applications FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Users can update own applications" ON applications FOR UPDATE USING (auth.uid() = user_id);
 
--- Saved Hackathons: Users can read/write their own
+-- Saved Hackathons
+DROP POLICY IF EXISTS "Users can view own saved hackathons" ON saved_hackathons;
+DROP POLICY IF EXISTS "Users can save hackathons" ON saved_hackathons;
+DROP POLICY IF EXISTS "Users can unsave hackathons" ON saved_hackathons;
+
 CREATE POLICY "Users can view own saved hackathons" ON saved_hackathons FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can save hackathons" ON saved_hackathons FOR INSERT WITH CHECK (auth.uid() = user_id);
 CREATE POLICY "Users can unsave hackathons" ON saved_hackathons FOR DELETE USING (auth.uid() = user_id);
 
--- Notifications: Users can read/update their own
+-- Notifications
+DROP POLICY IF EXISTS "Users can view own notifications" ON notifications;
+DROP POLICY IF EXISTS "Users can update own notifications" ON notifications;
+
 CREATE POLICY "Users can view own notifications" ON notifications FOR SELECT USING (auth.uid() = user_id);
 CREATE POLICY "Users can update own notifications" ON notifications FOR UPDATE USING (auth.uid() = user_id);
 
