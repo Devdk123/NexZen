@@ -28,7 +28,7 @@ interface TeamMember {
 }
 
 export function CreateTeamModal({ user, onClose, onSuccess }: CreateTeamModalProps) {
-  const { error, success } = useToast();
+  const { error, success, warning } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Form State
@@ -97,7 +97,7 @@ export function CreateTeamModal({ user, onClose, onSuccess }: CreateTeamModalPro
         success('Team created successfully!');
         if (validMembers.length === 0) {
           // Toast warning for single member
-          error("Warning: Your team needs at least 2 members for a valid submission. Add members before the registration deadline or your submission won't be valid.");
+          warning("Reminder", "Your team needs at least 2 members for a valid submission. Add members before the registration deadline.");
         }
         onSuccess(teamCode);
       }

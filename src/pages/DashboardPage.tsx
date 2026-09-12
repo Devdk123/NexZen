@@ -85,6 +85,10 @@ export default function DashboardPage() {
           onClose={() => { setShowCreateTeam(false); }}
           onSuccess={(teamCode) => {
             setShowCreateTeam(false);
+            teamService.getMyTeams(user.id).then(setTeams);
+            getUserTeam(user.id, user.email).then((existingTeam) => {
+              if (existingTeam) setShowTeamPopup(false);
+            });
           }}
         />
       )}
@@ -96,6 +100,10 @@ export default function DashboardPage() {
           onClose={() => { setShowJoinTeam(false); }}
           onSuccess={() => {
             setShowJoinTeam(false);
+            teamService.getMyTeams(user.id).then(setTeams);
+            getUserTeam(user.id, user.email).then((existingTeam) => {
+              if (existingTeam) setShowTeamPopup(false);
+            });
           }}
         />
       )}
