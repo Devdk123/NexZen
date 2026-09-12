@@ -10,6 +10,7 @@ interface AuthContextValue {
   login: (credentials: LoginCredentials) => Promise<void>;
   signup: (data: SignUpData) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
+  signInWithGithub: () => Promise<void>;
   logout: () => Promise<void>;
   updateUser: (updates: Partial<User>) => void;
 }
@@ -65,6 +66,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(user);
   }, []);
 
+  const signInWithGithub = useCallback(async () => {
+    const { user, token } = await authService.signInWithGithub();
+    authService.persistAuth(user, token);
+    setUser(user);
+  }, []);
+
   const logout = useCallback(async () => {
     await authService.logout();
     authService.clearAuth();
@@ -79,7 +86,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, login, signup, signInWithGoogle, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, login, signup, signInWithGoogle, signInWithGithub, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

@@ -96,13 +96,27 @@ export const authService = {
         }
       });
       if (error) throw { message: error.message } as AuthError;
-      // signInWithOAuth redirects, so this won't actually return immediately
       return new Promise(() => {});
     }
 
-    // Mock Fallback
     await delay(1200);
     return { user: MOCK_USERS[0], token: 'mock_google_token_' + Date.now() };
+  },
+
+  async signInWithGithub(): Promise<AuthResponse> {
+    if (hasSupabase && supabase) {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: window.location.origin + '/dashboard',
+        }
+      });
+      if (error) throw { message: error.message } as AuthError;
+      return new Promise(() => {});
+    }
+
+    await delay(1200);
+    return { user: MOCK_USERS[1], token: 'mock_github_token_' + Date.now() };
   },
 
   async forgotPassword(email: string): Promise<{ message: string }> {
