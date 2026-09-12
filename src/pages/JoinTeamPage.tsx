@@ -37,7 +37,7 @@ export default function JoinTeamPage() {
 
   return (
     <div className="min-h-screen bg-nexzen-bg bg-grid">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className="text-3xl font-extrabold text-nexzen-text mb-2">Find a <span className="gradient-text">Team</span></h1>
           <p className="text-nexzen-muted mb-8">Browse open teams and request to join one that matches your skills.</p>

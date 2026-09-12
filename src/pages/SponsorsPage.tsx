@@ -23,7 +23,7 @@ export default function SponsorsPage() {
 
   return (
     <div className="min-h-screen bg-nexzen-bg bg-dots">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
           <h1 className="text-4xl font-extrabold mb-3">Our <span className="gradient-text">Partners & Sponsors</span></h1>
           <p className="text-nexzen-muted max-w-xl mx-auto">The companies that believe in the next generation of innovators. They make NEXZEN possible.</p>

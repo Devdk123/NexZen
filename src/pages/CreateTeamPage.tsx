@@ -55,7 +55,7 @@ export default function CreateTeamPage() {
 
   return (
     <div className="min-h-screen bg-nexzen-bg bg-grid">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-10 pb-20">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-24 pb-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className="text-3xl font-extrabold text-nexzen-text mb-2">Create a <span className="gradient-text">Team</span></h1>
           <p className="text-nexzen-muted mb-8">Set up your team profile and start looking for members.</p>

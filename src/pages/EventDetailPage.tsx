@@ -39,7 +39,7 @@ export default function EventDetailPage() {
   if (!event) return null;
 
   return (
-    <div className="min-h-screen bg-nexzen-bg">
+    <div className="min-h-screen bg-nexzen-bg pt-20">
       <div className="relative h-56 overflow-hidden">
         <img src={event.banner} alt={event.name} className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-nexzen-bg via-black/40 to-transparent" />
