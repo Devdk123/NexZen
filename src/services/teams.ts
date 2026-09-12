@@ -1,7 +1,7 @@
 import type { Team, TeamFormData } from '../types';
 import { MOCK_TEAMS } from '../data/users';
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+const delay = (ms: number) => Promise.resolve();
 const TEAMS_KEY = 'nexzen_teams';
 
 export const teamService = {

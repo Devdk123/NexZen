@@ -1,7 +1,7 @@
 import type { Application, ApplicationFormData, ApplicationStatus } from '../types';
 import { MOCK_APPLICATIONS } from '../data/users';
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+const delay = (ms: number) => Promise.resolve();
 const APPS_KEY = 'nexzen_applications';
 
 export const applicationService = {

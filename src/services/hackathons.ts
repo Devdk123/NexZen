@@ -1,7 +1,7 @@
 import type { Hackathon, HackathonFilters } from '../types';
 import { MOCK_HACKATHONS } from '../data/hackathons';
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+const delay = (ms: number) => Promise.resolve();
 const SAVED_KEY = 'nexzen_saved_hackathons';
 
 export const hackathonService = {

@@ -5,7 +5,7 @@ import { supabase, hasSupabase } from '../lib/supabase';
 const AUTH_KEY = 'nexzen_auth';
 const TOKEN_KEY = 'nexzen_token';
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+const delay = (ms: number) => Promise.resolve();
 
 export interface AuthResponse {
   user: User;
