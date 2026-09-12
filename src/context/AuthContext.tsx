@@ -61,13 +61,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signInWithGoogle = useCallback(async () => {
-    const { user, token } = await authService.signInWithGoogle();
+    const response = await authService.signInWithGoogle();
+    if (!response) return;
+    const { user, token } = response;
     authService.persistAuth(user, token);
     setUser(user);
   }, []);
 
   const signInWithGithub = useCallback(async () => {
-    const { user, token } = await authService.signInWithGithub();
+    const response = await authService.signInWithGithub();
+    if (!response) return;
+    const { user, token } = response;
     authService.persistAuth(user, token);
     setUser(user);
   }, []);
