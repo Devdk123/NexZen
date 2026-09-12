@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { User } from '../types';
-import { authService } from '../services/auth';
+import { authService, mapSupabaseUser } from '../services/auth';
 import type { LoginCredentials, SignUpData } from '../services/auth';
 
 interface AuthContextValue {
@@ -10,6 +10,7 @@ interface AuthContextValue {
   login: (credentials: LoginCredentials) => Promise<void>;
   signup: (data: SignUpData) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
+  signInWithGithub: () => Promise<void>;
   logout: () => Promise<void>;
   updateUser: (updates: Partial<User>) => void;
 }
@@ -21,10 +22,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Restore session from localStorage
-    const stored = authService.getCurrentUser();
-    if (stored) setUser(stored);
-    setIsLoading(false);
+    import('../lib/supabase').then(({ supabase, hasSupabase }) => {
+      if (hasSupabase && supabase) {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+          if (session?.user) {
+            setUser(mapSupabaseUser(session.user));
+          }
+          setIsLoading(false);
+        });
+
+        supabase.auth.onAuthStateChange((_event, session) => {
+          if (session?.user) {
+            setUser(mapSupabaseUser(session.user));
+          } else {
+            setUser(null);
+            authService.clearAuth();
+          }
+        });
+      } else {
+        // Restore session from localStorage for mock
+        const stored = authService.getCurrentUser();
+        if (stored) setUser(stored);
+        setIsLoading(false);
+      }
+    });
   }, []);
 
   const login = useCallback(async (credentials: LoginCredentials) => {
@@ -45,6 +66,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(user);
   }, []);
 
+  const signInWithGithub = useCallback(async () => {
+    const { user, token } = await authService.signInWithGithub();
+    authService.persistAuth(user, token);
+    setUser(user);
+  }, []);
+
   const logout = useCallback(async () => {
     await authService.logout();
     authService.clearAuth();
@@ -59,7 +86,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [user]);
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, login, signup, signInWithGoogle, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, isAuthenticated: !!user, isLoading, login, signup, signInWithGoogle, signInWithGithub, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );

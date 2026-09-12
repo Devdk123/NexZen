@@ -21,7 +21,7 @@ const VALUES = [
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-nexzen-bg bg-dots">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-24">
         {/* Hero */}
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-20">
           <div className="flex items-center justify-center gap-2 mb-6">

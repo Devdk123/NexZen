@@ -45,7 +45,7 @@ export default function HackathonDetailPage() {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-8 space-y-6">
+      <div className="max-w-7xl mx-auto px-4 pt-24 pb-8 space-y-6">
         <Skeleton className="h-56 w-full rounded-2xl" />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-4">
@@ -62,7 +62,7 @@ export default function HackathonDetailPage() {
   const isOpen = hackathon.registrationStatus === 'open';
 
   return (
-    <div className="min-h-screen bg-nexzen-bg">
+    <div className="min-h-screen bg-nexzen-bg pt-20">
       {/* Banner */}
       <div className="relative h-64 overflow-hidden">
         <img src={hackathon.bannerImage || hackathon.logo} alt={hackathon.name} className="w-full h-full object-cover" />

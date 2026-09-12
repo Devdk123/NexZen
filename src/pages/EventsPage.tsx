@@ -27,7 +27,7 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen bg-nexzen-bg bg-grid">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
           <h1 className="text-4xl font-extrabold text-nexzen-text mb-2">Discover <span className="gradient-text">Events</span></h1>
           <p className="text-nexzen-muted">Workshops, conferences, webinars, and competitions for student innovators.</p>

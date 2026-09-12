@@ -31,6 +31,7 @@ const ContactPage         = lazy(() => import('./pages/ContactPage'));
 const FAQPage             = lazy(() => import('./pages/FAQPage'));
 const TermsPage           = lazy(() => import('./pages/TermsPage'));
 const PrivacyPage         = lazy(() => import('./pages/PrivacyPage'));
+const CookiesPage         = lazy(() => import('./pages/CookiesPage'));
 const NotFoundPage        = lazy(() => import('./pages/NotFoundPage'));
 
 // ─── Route Guards ────────────────────────────────────────────────────────────
@@ -66,6 +67,7 @@ function AppRoutes() {
           <Route path="/faq" element={<FAQPage />} />
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
+          <Route path="/cookies" element={<CookiesPage />} />
           <Route path="/404" element={<NotFoundPage />} />
 
           {/* ── Auth (redirect if logged in) ───────────── */}

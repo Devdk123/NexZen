@@ -1,7 +1,7 @@
 import type { Event, EventFilters } from '../types';
 import { MOCK_EVENTS } from '../data/events';
 
-const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+const delay = (ms: number) => Promise.resolve();
 
 export const eventService = {
   async getAll(filters?: EventFilters): Promise<Event[]> {

@@ -28,7 +28,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-nexzen-bg bg-grid">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-24">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-24">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-14">
           <h1 className="text-4xl font-extrabold text-nexzen-text mb-3">Get in <span className="gradient-text">Touch</span></h1>
           <p className="text-nexzen-muted max-w-xl mx-auto">Have a question, partnership inquiry, or just want to say hi? We'd love to hear from you.</p>

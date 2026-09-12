@@ -102,20 +102,20 @@ export function Navbar() {
         )}
       </AnimatePresence>
 
+      <div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-          scrolled ? 'glass-strong border-b border-white/8 shadow-card' : 'bg-transparent'
+          'pointer-events-auto transition-all duration-300 w-full max-w-6xl',
+          mobileOpen ? 'rounded-3xl' : 'rounded-full',
+          'border border-white/10 bg-[#080b14]/40 backdrop-blur-xl'
         )}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-nexzen-accent to-nexzen-violet flex items-center justify-center shadow-glow-sm group-hover:shadow-glow transition-all">
-                <Zap size={16} className="text-white" />
-              </div>
-              <span className="text-xl font-black tracking-tight gradient-text">NEXZEN</span>
+              <img src="/part2.png" alt="Logo" className="w-8 h-8 object-contain transition-all" />
+              <img src="/part 1.png" alt="NexZen" className="h-8 object-contain" />
             </Link>
 
             {/* Desktop nav */}
@@ -326,6 +326,7 @@ export function Navbar() {
           )}
         </AnimatePresence>
       </header>
+      </div>
     </>
   );
 }
