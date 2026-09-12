@@ -42,6 +42,7 @@ export function CreateTeamModal({ user, onClose, onSuccess }: CreateTeamModalPro
 
   // Members State
   const [members, setMembers] = useState<TeamMember[]>([{ name: '', email: '', phone: '', github: '', linkedin: '' }]);
+  const [hasConsent, setHasConsent] = useState(false);
 
   const handleAddMember = () => {
     if (members.length < 3) {
@@ -67,6 +68,7 @@ export function CreateTeamModal({ user, onClose, onSuccess }: CreateTeamModalPro
     if (!leaderCollege.trim()) return error('Leader college is required');
     if (!leaderGithub.trim()) return error('Leader GitHub is required');
     if (!leaderLinkedin.trim()) return error('Leader LinkedIn is required');
+    if (!hasConsent) return error('You must agree to the hackathon rules and conditions');
 
     // Filter out members that don't have an email
     const validMembers = members.filter(m => m.email.trim() !== '');
@@ -75,15 +77,13 @@ export function CreateTeamModal({ user, onClose, onSuccess }: CreateTeamModalPro
     try {
       const result = await createTeam({
         teamName,
-        leader: {
-          id: user.id,
-          fullName: user.fullName,
-          email: user.email,
-          phone: leaderPhone,
-          college: leaderCollege,
-          github: leaderGithub,
-          linkedin: leaderLinkedin,
-        },
+        leaderUserId: user.id,
+        leaderName: user.fullName,
+        leaderEmail: user.email,
+        leaderPhone: leaderPhone,
+        leaderCollege: leaderCollege,
+        leaderGithub: leaderGithub,
+        leaderLinkedin: leaderLinkedin,
         members: validMembers,
       });
 
@@ -325,6 +325,20 @@ export function CreateTeamModal({ user, onClose, onSuccess }: CreateTeamModalPro
                 ))}
               </div>
             </section>
+
+            {/* Consent Section */}
+            <div className="flex items-start gap-3 p-4 bg-white/5 rounded-lg border border-white/10">
+              <input
+                type="checkbox"
+                id="team-consent"
+                checked={hasConsent}
+                onChange={(e) => setHasConsent(e.target.checked)}
+                className="mt-1 w-4 h-4 rounded border-white/20 bg-transparent text-nexzen-accent focus:ring-nexzen-accent focus:ring-offset-nexzen-bg cursor-pointer"
+              />
+              <label htmlFor="team-consent" className="text-sm text-nexzen-muted leading-relaxed cursor-pointer">
+                I confirm that all team members agree to participate and adhere to the hackathon's rules and code of conduct. I understand that teams with fewer than 2 members before the registration deadline will have invalid submissions.
+              </label>
+            </div>
 
             {/* Footer / Submit */}
             <div className="pt-6 border-t border-white/10 flex justify-end gap-3 sticky bottom-0 bg-nexzen-bg/95 backdrop-blur p-4 -mx-6 -mb-6 rounded-b-2xl">
