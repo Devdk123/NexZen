@@ -10,10 +10,13 @@ import { Badge } from '../components/ui/Badge';
 import { cn } from '../utils';
 import type { Team } from '../types';
 
+import { TeamDetailsModal } from '../components/TeamDetailsModal';
+
 export default function MyTeamsPage() {
   const { user } = useAuth();
   const [teams, setTeams] = useState<Team[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -24,7 +27,7 @@ export default function MyTeamsPage() {
 
   return (
     <div className="min-h-screen bg-nexzen-bg bg-grid">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-20">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="flex items-center justify-between mb-8">
             <div>
@@ -54,7 +57,8 @@ export default function MyTeamsPage() {
                 const isLeader = team.leaderId === user.id;
                 return (
                   <motion.div key={team.id} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
-                    className="glass rounded-2xl border border-white/8 p-5 hover:border-white/15 transition-all">
+                    onClick={() => setSelectedTeam(team)}
+                    className="glass rounded-2xl border border-white/8 p-5 hover:border-white/20 hover:bg-white/5 transition-all cursor-pointer shadow-sm hover:shadow-md">
                     <div className="flex items-start justify-between gap-4 flex-wrap">
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-nexzen-accent to-nexzen-violet flex items-center justify-center font-bold text-white text-lg flex-shrink-0">
@@ -81,24 +85,22 @@ export default function MyTeamsPage() {
                     )}
 
                     {/* Members */}
-                    <div className="flex items-center gap-2 mt-4">
-                      <div className="flex -space-x-2">
-                        {team.members.slice(0, 5).map((m, j) => (
-                          <div key={j} className="w-7 h-7 rounded-full bg-gradient-to-br from-nexzen-accent to-nexzen-violet border-2 border-nexzen-bg flex items-center justify-center text-[10px] font-bold text-white"
-                            title={m.name}>
-                            {m.name?.[0] || '?'}
-                          </div>
-                        ))}
+                    <div className="flex items-center justify-between mt-4">
+                      <div className="flex items-center gap-2">
+                        <div className="flex -space-x-2">
+                          {team.members.slice(0, 5).map((m, j) => (
+                            <div key={j} className="w-7 h-7 rounded-full bg-gradient-to-br from-nexzen-accent to-nexzen-violet border-2 border-nexzen-bg flex items-center justify-center text-[10px] font-bold text-white"
+                              title={m.fullName}>
+                              {m.fullName?.[0] || '?'}
+                            </div>
+                          ))}
+                        </div>
+                        <span className="text-xs text-nexzen-subtle">{team.members.length} member{team.members.length !== 1 ? 's' : ''}</span>
                       </div>
-                      <span className="text-xs text-nexzen-subtle">{team.members.length} member{team.members.length !== 1 ? 's' : ''}</span>
+                      <div className="text-xs text-nexzen-accent flex items-center gap-1 group-hover:underline">
+                        View Details <ExternalLink size={12} />
+                      </div>
                     </div>
-
-                    {/* Domains */}
-                    {team.domains && team.domains.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mt-3">
-                        {team.domains.map((d) => <Badge key={d} size="xs" variant="default">{d}</Badge>)}
-                      </div>
-                    )}
                   </motion.div>
                 );
               })}
@@ -106,6 +108,14 @@ export default function MyTeamsPage() {
           )}
         </motion.div>
       </div>
+
+      {selectedTeam && (
+        <TeamDetailsModal 
+          team={selectedTeam} 
+          currentUserId={user.id} 
+          onClose={() => setSelectedTeam(null)} 
+        />
+      )}
     </div>
   );
 }
