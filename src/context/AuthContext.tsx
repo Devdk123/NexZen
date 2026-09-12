@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import type { User } from '../types';
-import { authService } from '../services/auth';
+import { authService, mapSupabaseUser } from '../services/auth';
 import type { LoginCredentials, SignUpData } from '../services/auth';
 
 interface AuthContextValue {
@@ -21,10 +21,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Restore session from localStorage
-    const stored = authService.getCurrentUser();
-    if (stored) setUser(stored);
-    setIsLoading(false);
+    import('../lib/supabase').then(({ supabase, hasSupabase }) => {
+      if (hasSupabase && supabase) {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+          if (session?.user) {
+            setUser(mapSupabaseUser(session.user));
+          }
+          setIsLoading(false);
+        });
+
+        supabase.auth.onAuthStateChange((_event, session) => {
+          if (session?.user) {
+            setUser(mapSupabaseUser(session.user));
+          } else {
+            setUser(null);
+            authService.clearAuth();
+          }
+        });
+      } else {
+        // Restore session from localStorage for mock
+        const stored = authService.getCurrentUser();
+        if (stored) setUser(stored);
+        setIsLoading(false);
+      }
+    });
   }, []);
 
   const login = useCallback(async (credentials: LoginCredentials) => {

@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { AnimatedCounter } from '../components/landing/AnimatedCounter';
+import HeroScene from '../HeroScene';
 
 import { cn } from '../utils';
 import type { Hackathon, Event, Domain } from '../types';
@@ -255,40 +256,24 @@ export default function LandingPage() {
 
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-nexzen-bg">
-      {/* Background layers */}
-      <div className="absolute inset-0 bg-grid opacity-60" />
+    <section 
+      className="relative min-h-screen flex flex-col justify-center overflow-hidden"
+      style={{ backgroundColor: '#080B14' }}
+    >
+      {/* 3D Background */}
+      <HeroScene />
+
+      {/* Text ko readable rakhne ke liye gradient overlay */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 z-10"
         style={{
-          background:
-            'radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99,102,241,0.18) 0%, rgba(139,92,246,0.10) 40%, transparent 70%)',
-        }}
-      />
-      <div
-        className="absolute bottom-0 left-0 right-0 h-64 pointer-events-none"
-        style={{
-          background: 'linear-gradient(to top, #080B14 0%, transparent 100%)',
+          background: 'radial-gradient(ellipse 80% 60% at 50% 50%, transparent 25%, rgba(4,12,26,0.6) 100%)'
         }}
       />
 
-      {/* Accent orbs */}
-      <motion.div
-        animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.5, 0.3] }}
-        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -top-32 -left-32 w-96 h-96 rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)' }}
-      />
-      <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
-        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-        className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 70%)' }}
-      />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 lg:px-8 pt-24 pb-16">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 md:px-6 lg:px-8 pt-24 pb-16">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left: Text Content */}
+          {/* Text Content */}
           <motion.div
             initial="hidden"
             animate="visible"
@@ -363,20 +348,7 @@ function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right: Floating Cards */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, delay: 0.3, ease: easeCurve }}
-            className="relative hidden lg:flex flex-col items-center justify-center gap-4"
-          >
-            <div className="glass-strong rounded-2xl p-8 border border-nexzen-accent/25 shadow-glow-sm text-center">
-              <h3 className="text-2xl font-bold gradient-text mb-2">Coming Soon</h3>
-              <p className="text-nexzen-muted text-sm max-w-xs">
-                We're working hard to bring you the best hackathons and tech events. Stay tuned!
-              </p>
-            </div>
-          </motion.div>
+          {/* Right side removed to prevent confusion with skeleton loading */}
         </div>
 
         {/* Mobile: hero stats full row */}
