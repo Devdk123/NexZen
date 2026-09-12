@@ -112,10 +112,8 @@ export function Navbar() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2 group">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-nexzen-accent to-nexzen-violet flex items-center justify-center shadow-glow-sm group-hover:shadow-glow transition-all">
-                <Zap size={16} className="text-white" />
-              </div>
-              <span className="text-xl font-black tracking-tight gradient-text">NEXZEN</span>
+              <img src="/part2.png" alt="Logo" className="w-8 h-8 object-contain transition-all" />
+              <img src="/part 1.png" alt="NexZen" className="h-8 object-contain" />
             </Link>
 
             {/* Desktop nav */}
