@@ -14,6 +14,43 @@ export const teamService = {
   },
 
   async getMyTeams(userId: string): Promise<Team[]> {
+    // Check Supabase first
+    try {
+      // Import dynamically to avoid circular dependencies if any
+      const { getUserTeam } = await import('./teamSupabase');
+      const supabaseTeam = await getUserTeam(userId);
+      
+      if (supabaseTeam) {
+        const team: Team = {
+          id: supabaseTeam.team_code || supabaseTeam.id,
+          name: supabaseTeam.team_name,
+          hackathonId: 'default',
+          hackathonName: 'NEXZEN Hackathon',
+          leaderId: supabaseTeam.leader_user_id,
+          leaderName: supabaseTeam.leader_name,
+          members: supabaseTeam.team_members?.map((m: any) => ({
+            id: m.id,
+            fullName: m.member_name,
+            email: m.member_email,
+            phone: m.member_phone,
+            github: m.member_github,
+            linkedin: m.member_linkedin,
+            isLeader: m.is_leader,
+            skills: []
+          })) || [],
+          maxSize: supabaseTeam.max_size || 4,
+          status: supabaseTeam.status as any,
+          domains: [],
+          createdAt: supabaseTeam.created_at,
+          college: supabaseTeam.leader_college
+        };
+        return [team];
+      }
+    } catch (e) {
+      console.error('Failed to get Supabase team in getMyTeams', e);
+    }
+
+    // Fallback to mock
     await delay(300);
     const stored = this._getStoredTeams();
     const all = [...MOCK_TEAMS, ...stored];
