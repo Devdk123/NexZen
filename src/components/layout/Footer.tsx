@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Code2, Briefcase, Camera, Video, Zap, Send } from 'lucide-react';
+import { Code2, Briefcase, Camera, Video, Send } from 'lucide-react';
 import { useState } from 'react';
 
 export function Footer() {
@@ -24,10 +24,8 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-2 space-y-4">
             <Link to="/" className="flex items-center gap-2 w-fit">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-nexzen-accent to-nexzen-violet flex items-center justify-center shadow-glow-sm">
-                <Zap size={16} className="text-white" />
-              </div>
-              <span className="text-xl font-black tracking-tight gradient-text">NEXZEN</span>
+              <img src="/part2.png" alt="Logo" className="w-8 h-8 object-contain" />
+              <img src="/part 1.png" alt="NexZen" className="h-8 object-contain" />
             </Link>
             <p className="text-sm text-nexzen-muted max-w-xs leading-relaxed">
               India's premier platform for student hackathons, tech events, and innovation challenges. Discover, build, and compete.
@@ -76,6 +74,7 @@ export function Footer() {
                 { to: '/faq', label: 'FAQ' },
                 { to: '/terms', label: 'Terms & Conditions' },
                 { to: '/privacy', label: 'Privacy Policy' },
+                { to: '/cookies', label: 'Cookie Policy' },
               ].map((l) => (
                 <li key={l.to}>
                   <Link to={l.to} className="text-sm text-nexzen-muted hover:text-nexzen-accent transition-colors">
@@ -124,6 +123,7 @@ export function Footer() {
           <div className="flex items-center gap-4">
             <Link to="/terms" className="text-xs text-nexzen-subtle hover:text-nexzen-muted transition-colors">Terms</Link>
             <Link to="/privacy" className="text-xs text-nexzen-subtle hover:text-nexzen-muted transition-colors">Privacy</Link>
+            <Link to="/cookies" className="text-xs text-nexzen-subtle hover:text-nexzen-muted transition-colors">Cookies</Link>
           </div>
         </div>
       </div>
