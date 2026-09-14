@@ -69,8 +69,8 @@ const cardEntry = {
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const HERO_STATS = [
-  { label: 'Launching Soon', value: 1, suffix: 'st Hackathon', prefix: '' },
-  { label: 'Open For', value: 0, suffix: ' Registrations', prefix: '' },
+  { label: 'Hackathon Date', value: 15, suffix: ' Oct 2026', prefix: '' },
+  { label: 'Duration', value: 24, suffix: ' Hours', prefix: '' },
 ];
 
 const HOW_IT_WORKS = [
@@ -612,20 +612,19 @@ function CTASection() {
             variants={fadeUp}
             className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-4"
           >
-            Ready to <span className="gradient-text">Compete?</span>
+            Ready to <span className="gradient-text">Build?</span>
           </motion.h2>
 
           <motion.p variants={fadeUp} className="text-lg md:text-xl text-nexzen-muted mb-3 max-w-2xl mx-auto leading-relaxed">
-            Join <span className="text-nexzen-text font-semibold">1M+ students</span> on NEXZEN. Find hackathons, build teams,
-            and turn your ideas into award-winning projects.
+            Be among the first participants in India's newest hackathon platform. Register for NEXZEN 2026 today.
           </motion.p>
 
           <motion.p variants={fadeUp} className="text-sm text-nexzen-subtle mb-10">
-            No credit card required · Free forever for students · 500+ active opportunities
+            Free to participate · National level · Open for all students
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link to="/signup">
+            <Link to="/nexzen-2026">
               <Button
                 variant="primary"
                 size="xl"
@@ -644,27 +643,9 @@ function CTASection() {
             </Link>
           </motion.div>
 
-          {/* Social proof row */}
-          <motion.div variants={fadeUp} className="mt-12 flex items-center justify-center gap-3">
-            <div className="flex -space-x-2.5">
-              {['#6366F1', '#8B5CF6', '#06B6D4', '#10B981', '#F59E0B'].map((color, i) => (
-                <div
-                  key={i}
-                  className="w-8 h-8 rounded-full border-2 border-nexzen-bg flex items-center justify-center text-[10px] font-bold text-white"
-                  style={{ background: `radial-gradient(circle at 30% 30%, ${color}, ${color}99)` }}
-                >
-                  {String.fromCharCode(65 + i)}
-                </div>
-              ))}
-            </div>
-            <div className="flex flex-col items-start">
-              <div className="flex gap-0.5">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} size={12} className="text-yellow-400 fill-yellow-400" />
-                ))}
-              </div>
-              <p className="text-xs text-nexzen-muted">Loved by 1M+ students across India</p>
-            </div>
+          {/* Coming soon notice */}
+          <motion.div variants={fadeUp} className="mt-12 flex items-center justify-center">
+            <p className="text-sm text-nexzen-muted">Our first hackathon is coming — October 15, 2026</p>
           </motion.div>
         </motion.div>
       </div>

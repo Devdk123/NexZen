@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { CursorFollower } from '../ui/CursorFollower';
+import { AnnouncementBanner } from './AnnouncementBanner';
 
 export function Layout() {
   const location = useLocation();
@@ -12,6 +13,7 @@ export function Layout() {
   return (
     <div className="min-h-screen flex flex-col bg-nexzen-bg">
       <CursorFollower />
+      <AnnouncementBanner />
       <Navbar />
       <AnimatePresence mode="wait">
         <motion.main

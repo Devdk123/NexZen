@@ -14,6 +14,10 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconRight?: React.ReactNode;
   fullWidth?: boolean;
   glow?: boolean;
+  as?: 'button' | 'a';
+  href?: string;
+  target?: string;
+  rel?: string;
 }
 
 const variants: Record<Variant, string> = {
@@ -39,26 +43,21 @@ const sizes: Record<Size, string> = {
   xl: 'px-8 py-4 text-lg rounded-2xl gap-3',
 };
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = 'primary', size = 'md', loading, icon, iconRight, fullWidth, glow, className, children, disabled, ...props }, ref) => {
-    return (
-      <motion.button
-        ref={ref}
-        whileHover={{ y: -2, rotateX: 2, rotateY: -2, scale: 1.02 }}
-        whileTap={{ scale: 0.97 }}
-        className={cn(
-          'interactive-button inline-flex items-center justify-center font-medium border transition-all duration-200 select-none cursor-pointer',
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-nexzen-accent focus-visible:ring-offset-1 focus-visible:ring-offset-nexzen-bg',
-          'disabled:opacity-50 disabled:pointer-events-none',
-          variants[variant],
-          sizes[size],
-          fullWidth && 'w-full',
-          glow && 'shadow-glow',
-          className
-        )}
-        disabled={disabled || loading}
-        {...(props as React.ComponentProps<typeof motion.button>)}
-      >
+export const Button = React.forwardRef<any, ButtonProps>(
+  ({ variant = 'primary', size = 'md', loading, icon, iconRight, fullWidth, glow, className, children, disabled, as, href, target, rel, ...props }, ref) => {
+    const combinedClassName = cn(
+      'interactive-button inline-flex items-center justify-center font-medium border transition-all duration-200 select-none cursor-pointer',
+      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-nexzen-accent focus-visible:ring-offset-1 focus-visible:ring-offset-nexzen-bg',
+      'disabled:opacity-50 disabled:pointer-events-none',
+      variants[variant],
+      sizes[size],
+      fullWidth && 'w-full',
+      glow && 'shadow-glow',
+      className
+    );
+
+    const content = (
+      <>
         {loading ? (
           <Loader2 className="animate-spin" size={16} />
         ) : (
@@ -66,6 +65,36 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         )}
         {children}
         {iconRight && !loading && <span className="flex-shrink-0">{iconRight}</span>}
+      </>
+    );
+
+    if (as === 'a' || href) {
+      return (
+        <motion.a
+          ref={ref}
+          href={href}
+          target={target}
+          rel={rel}
+          whileHover={{ y: -2, rotateX: 2, rotateY: -2, scale: 1.02 }}
+          whileTap={{ scale: 0.97 }}
+          className={combinedClassName}
+          {...(props as any)}
+        >
+          {content}
+        </motion.a>
+      );
+    }
+
+    return (
+      <motion.button
+        ref={ref}
+        whileHover={{ y: -2, rotateX: 2, rotateY: -2, scale: 1.02 }}
+        whileTap={{ scale: 0.97 }}
+        className={combinedClassName}
+        disabled={disabled || loading}
+        {...(props as React.ComponentProps<typeof motion.button>)}
+      >
+        {content}
       </motion.button>
     );
   }

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Code2, Briefcase, Camera, Video, Send } from 'lucide-react';
+import { Code2, Briefcase, Camera, Video, Send, Mail, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
+import { NEXZEN_LINKS } from '../../data/nexzenHackathon';
 
 export function Footer() {
   const [email, setEmail] = useState('');
@@ -32,17 +33,21 @@ export function Footer() {
             </p>
             <div className="flex items-center gap-3">
               {[
-                { href: '#', icon: <Code2 size={18} />, label: 'GitHub' },
-                { href: '#', icon: <Briefcase size={18} />, label: 'LinkedIn' },
-                { href: '#', icon: <Camera size={18} />, label: 'Instagram' },
-                { href: '#', icon: <Video size={18} />, label: 'YouTube' },
-              ].map((s) => (
+                { href: NEXZEN_LINKS.instagram, icon: <Camera size={18} />, label: 'Instagram' },
+                { href: NEXZEN_LINKS.linkedin, icon: <Briefcase size={18} />, label: 'LinkedIn' },
+                { href: NEXZEN_LINKS.whatsappChannel, icon: <MessageCircle size={18} />, label: 'WhatsApp Channel' },
+                { href: 'https://github.com/nexzen', icon: <Code2 size={18} />, label: 'GitHub' },
+              ].filter((s) => s.href && s.href !== '#').map((s) => (
                 <a key={s.label} href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer"
                   className="p-2 rounded-lg text-nexzen-subtle hover:text-nexzen-accent hover:bg-nexzen-accent/10 transition-all border border-white/8 hover:border-nexzen-accent/30">
                   {s.icon}
                 </a>
               ))}
             </div>
+            <a href={`mailto:${NEXZEN_LINKS.contactEmail}`} className="inline-flex items-center gap-2 text-xs text-nexzen-muted hover:text-nexzen-accent transition-colors">
+              <Mail size={14} />
+              {NEXZEN_LINKS.contactEmail}
+            </a>
           </div>
 
           {/* Platform */}
@@ -50,7 +55,8 @@ export function Footer() {
             <h4 className="text-sm font-semibold text-nexzen-text">Platform</h4>
             <ul className="space-y-2.5">
               {[
-                { to: '/hackathons', label: 'Hackathons' },
+                { to: '/nexzen-2026', label: 'NEXZEN 2026 Hackathon' },
+                { to: '/hackathons', label: 'Explore Hackathons' },
                 { to: '/events', label: 'Events' },
                 { to: '/teams/join', label: 'Find a Team' },
                 { to: '/sponsors', label: 'Sponsors' },
@@ -118,7 +124,7 @@ export function Footer() {
 
         <div className="mt-12 pt-6 border-t border-white/8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-nexzen-subtle">
-            © {new Date().getFullYear()} NEXZEN. All rights reserved. Built for student innovators.
+            © 2026 NEXZEN. All Rights Reserved.
           </p>
           <div className="flex items-center gap-4">
             <Link to="/terms" className="text-xs text-nexzen-subtle hover:text-nexzen-muted transition-colors">Terms</Link>

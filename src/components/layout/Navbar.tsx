@@ -12,6 +12,7 @@ import { cn } from '../../utils';
 
 const NAV_LINKS = [
   { to: '/hackathons', label: 'Hackathons' },
+  { to: '/nexzen-2026', label: 'NEXZEN 2026' },
   { to: '/events', label: 'Events' },
   { to: '/sponsors', label: 'Sponsors' },
   { to: '/about', label: 'About' },
@@ -29,10 +30,19 @@ export function Navbar() {
   const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
   const navigate = useNavigate();
 
+  const [bannerVisible, setBannerVisible] = useState(() => {
+    return sessionStorage.getItem('nexzen-banner-dismissed') !== 'true';
+  });
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
+    const handleDismissed = () => setBannerVisible(false);
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('nexzen-banner-dismissed', handleDismissed);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('nexzen-banner-dismissed', handleDismissed);
+    };
   }, []);
 
   // Close dropdowns on outside click
@@ -102,7 +112,10 @@ export function Navbar() {
         )}
       </AnimatePresence>
 
-      <div className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4 pointer-events-none">
+      <div className={cn(
+        "fixed left-0 right-0 z-40 flex justify-center px-4 pointer-events-none transition-all duration-300",
+        bannerVisible ? "top-11 sm:top-12" : "top-4"
+      )}>
       <header
         className={cn(
           'pointer-events-auto transition-all duration-300 w-full max-w-6xl',
@@ -260,6 +273,9 @@ export function Navbar() {
                 </>
               ) : (
                 <div className="hidden md:flex items-center gap-2">
+                  <Link to="/nexzen-2026">
+                    <Button variant="primary" size="sm" glow>Register Now</Button>
+                  </Link>
                   <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>Log In</Button>
                   <Button variant="primary" size="sm" onClick={() => navigate('/signup')}>Sign Up</Button>
                 </div>
@@ -301,9 +317,16 @@ export function Navbar() {
                   </NavLink>
                 ))}
                 {!isAuthenticated && (
-                  <div className="flex gap-2 pt-3 border-t border-white/8">
-                    <Button variant="secondary" size="sm" fullWidth onClick={() => { navigate('/login'); setMobileOpen(false); }}>Log In</Button>
-                    <Button variant="primary" size="sm" fullWidth onClick={() => { navigate('/signup'); setMobileOpen(false); }}>Sign Up</Button>
+                  <div className="space-y-2 pt-3 border-t border-white/8">
+                    <Link to="/nexzen-2026" onClick={() => setMobileOpen(false)}>
+                      <Button variant="primary" size="sm" fullWidth glow className="mb-2">
+                        Register for NEXZEN 2026
+                      </Button>
+                    </Link>
+                    <div className="flex gap-2">
+                      <Button variant="secondary" size="sm" fullWidth onClick={() => { navigate('/login'); setMobileOpen(false); }}>Log In</Button>
+                      <Button variant="ghost" size="sm" fullWidth onClick={() => { navigate('/signup'); setMobileOpen(false); }}>Sign Up</Button>
+                    </div>
                   </div>
                 )}
                 {isAuthenticated && (

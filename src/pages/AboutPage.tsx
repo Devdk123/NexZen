@@ -2,14 +2,7 @@ import { motion } from 'framer-motion';
 import { Zap, Target, Users, Globe, Code2, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '../components/ui/Button';
-import { AnimatedCounter } from '../components/landing/AnimatedCounter';
 
-const TEAM = [
-  { name: 'Aditya Kumar', role: 'Founder & CEO', avatar: 'AK', description: 'Ex-SDE at Amazon. Built this platform after struggling to find hackathon teams at IIT Delhi.' },
-  { name: 'Priya Sharma', role: 'Co-Founder & CTO', avatar: 'PS', description: 'Full-stack engineer. 3x hackathon winner. Passionate about building tools that empower students.' },
-  { name: 'Rohan Singh', role: 'Head of Product', avatar: 'RS', description: 'UX researcher at heart. Talks to 100+ students a month to understand their pain points.' },
-  { name: 'Nisha Patel', role: 'Head of Community', avatar: 'NP', description: 'Built student communities at 5 top engineering colleges. Knows every hackathon organizer personally.' },
-];
 
 const VALUES = [
   { icon: Target, title: 'Student First', description: 'Every decision we make starts with one question: does this help the student innovator?' },
@@ -34,8 +27,7 @@ export default function AboutPage() {
             Built by students,<br /><span className="gradient-text">for students.</span>
           </h1>
           <p className="text-nexzen-muted text-lg max-w-2xl mx-auto leading-relaxed">
-            We were frustrated students who missed deadlines, couldn't find team members, and had no single place to discover opportunities.
-            So we built NEXZEN — India's premier platform for student innovators.
+            A new platform built by students, for students. NEXZEN is organizing its first national-level hackathon — and we're just getting started.
           </p>
         </motion.div>
 
@@ -43,13 +35,13 @@ export default function AboutPage() {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
           className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-20">
           {[
-            { label: 'Active Students', value: 1000000, suffix: '+', format: true },
-            { label: 'Hackathons Listed', value: 500, suffix: '+' },
-            { label: 'Teams Formed', value: 50000, suffix: '+', format: true },
-            { label: 'Colleges', value: 500, suffix: '+' },
+            { label: 'Hackathon Launching', value: '1st' },
+            { label: 'Level Competition', value: 'National' },
+            { label: 'Fully Remote', value: 'Online' },
+            { label: 'For All Students', value: 'Open' },
           ].map((s) => (
             <div key={s.label} className="glass rounded-2xl border border-white/8 p-5 text-center">
-              <p className="text-2xl font-extrabold gradient-text"><AnimatedCounter target={s.value} suffix={s.suffix} format={s.format} /></p>
+              <p className="text-2xl font-extrabold gradient-text">{s.value}</p>
               <p className="text-xs text-nexzen-muted mt-1">{s.label}</p>
             </div>
           ))}
@@ -82,31 +74,12 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Team */}
-        <div className="mb-20">
-          <h2 className="text-3xl font-extrabold text-nexzen-text text-center mb-10">The Team</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {TEAM.map((m, i) => (
-              <motion.div key={m.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="glass rounded-2xl border border-white/8 p-6 flex gap-4">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-nexzen-accent to-nexzen-violet flex items-center justify-center font-bold text-white text-lg flex-shrink-0">
-                  {m.avatar}
-                </div>
-                <div>
-                  <p className="font-bold text-nexzen-text">{m.name}</p>
-                  <p className="text-xs text-nexzen-accent mb-2">{m.role}</p>
-                  <p className="text-xs text-nexzen-muted leading-relaxed">{m.description}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
 
         {/* CTA */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
           <h2 className="text-3xl font-extrabold text-nexzen-text mb-3">Ready to join the movement?</h2>
-          <p className="text-nexzen-muted mb-6">Join 1M+ student innovators building India's future.</p>
-          <Link to="/signup"><Button variant="primary" size="xl" glow>Get Started for Free</Button></Link>
+          <p className="text-nexzen-muted mb-6">Be part of India's newest student innovation platform.</p>
+          <Link to="/nexzen-2026"><Button variant="primary" size="xl" glow>Get Started for Free</Button></Link>
         </motion.div>
       </div>
     </div>

@@ -27,6 +27,7 @@ const SavedHackathonsPage = lazy(() => import('./pages/SavedHackathonsPage'));
 const CreateTeamPage      = lazy(() => import('./pages/CreateTeamPage'));
 const JoinTeamPage        = lazy(() => import('./pages/JoinTeamPage'));
 const AboutPage           = lazy(() => import('./pages/AboutPage'));
+const NexzenHackathonPage = lazy(() => import('./pages/NexzenHackathonPage'));
 const ContactPage         = lazy(() => import('./pages/ContactPage'));
 const FAQPage             = lazy(() => import('./pages/FAQPage'));
 const TermsPage           = lazy(() => import('./pages/TermsPage'));
@@ -57,6 +58,7 @@ function AppRoutes() {
         <Route element={<Layout />}>
           {/* ── Public ─────────────────────────────────── */}
           <Route path="/" element={<LandingPage />} />
+          <Route path="/nexzen-2026" element={<NexzenHackathonPage />} />
           <Route path="/hackathons" element={<HackathonsPage />} />
           <Route path="/hackathons/:slug" element={<HackathonDetailPage />} />
           <Route path="/events" element={<EventsPage />} />
