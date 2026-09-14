@@ -36,9 +36,8 @@ export function Footer() {
                 { href: NEXZEN_LINKS.instagram, icon: <Camera size={18} />, label: 'Instagram' },
                 { href: NEXZEN_LINKS.linkedin, icon: <Briefcase size={18} />, label: 'LinkedIn' },
                 { href: NEXZEN_LINKS.whatsappChannel, icon: <MessageCircle size={18} />, label: 'WhatsApp Channel' },
-                { href: '#', icon: <Code2 size={18} />, label: 'GitHub' },
-                { href: '#', icon: <Video size={18} />, label: 'YouTube' },
-              ].map((s) => (
+                { href: 'https://github.com/nexzen', icon: <Code2 size={18} />, label: 'GitHub' },
+              ].filter((s) => s.href && s.href !== '#').map((s) => (
                 <a key={s.label} href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer"
                   className="p-2 rounded-lg text-nexzen-subtle hover:text-nexzen-accent hover:bg-nexzen-accent/10 transition-all border border-white/8 hover:border-nexzen-accent/30">
                   {s.icon}
@@ -56,7 +55,8 @@ export function Footer() {
             <h4 className="text-sm font-semibold text-nexzen-text">Platform</h4>
             <ul className="space-y-2.5">
               {[
-                { to: '/hackathons', label: 'Hackathons' },
+                { to: '/nexzen-2026', label: 'NEXZEN 2026 Hackathon' },
+                { to: '/hackathons', label: 'Explore Hackathons' },
                 { to: '/events', label: 'Events' },
                 { to: '/teams/join', label: 'Find a Team' },
                 { to: '/sponsors', label: 'Sponsors' },

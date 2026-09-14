@@ -13,19 +13,21 @@ export function AnnouncementBanner() {
   const handleDismiss = () => {
     setDismissed(true);
     sessionStorage.setItem(STORAGE_KEY, 'true');
+    window.dispatchEvent(new Event('nexzen-banner-dismissed'));
   };
 
   return (
     <AnimatePresence>
       {!dismissed && (
-        <motion.div
+        <motion.aside
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: 'auto', opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className="overflow-hidden"
+          className="fixed top-0 left-0 right-0 z-50 overflow-hidden"
+          aria-label="Announcement"
         >
-          <div className="relative bg-gradient-to-r from-[#0a0e1a] via-[#0d1528] to-[#0a0e1a] border-b border-white/8">
+          <div className="relative bg-[#0a0e1a]/95 backdrop-blur-md border-b border-white/8 shadow-md">
             {/* Subtle gradient accent line */}
             <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-nexzen-accent/40 to-transparent" />
 
@@ -53,7 +55,7 @@ export function AnnouncementBanner() {
               </button>
             </div>
           </div>
-        </motion.div>
+        </motion.aside>
       )}
     </AnimatePresence>
   );

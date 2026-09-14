@@ -9,6 +9,7 @@ import {
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { Accordion } from '../components/ui/Accordion';
+import { useToast } from '../components/ui/Toast';
 import { cn } from '../utils';
 import { 
   NEXZEN_EVENT, NEXZEN_LINKS, NEXZEN_THEMES, NEXZEN_TIMELINE, NEXZEN_RULES, 
@@ -34,6 +35,14 @@ const SectionHeader = ({ title, subtitle, eyebrow }: { title: React.ReactNode, s
 
 export default function NexzenHackathonPage() {
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const { info } = useToast();
+
+  const handleLinkClick = (url: string, title: string, message: string) => (e: React.MouseEvent) => {
+    if (!url || url === '#') {
+      e.preventDefault();
+      info(title, message);
+    }
+  };
 
   useEffect(() => {
     const targetDate = new Date(NEXZEN_EVENT.startDate).getTime();
@@ -113,19 +122,24 @@ export default function NexzenHackathonPage() {
             </motion.div>
             
             <motion.div variants={fadeIn} className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+              <Link to={NEXZEN_LINKS.websiteRegistration} className="w-full sm:w-auto">
+                <Button 
+                  variant="primary" size="xl" glow
+                  className="w-full sm:w-auto min-h-[48px]"
+                  iconRight={<ArrowRight className="w-5 h-5" />}
+                >
+                  Register on Website
+                </Button>
+              </Link>
               <Button 
-                as="a" href={NEXZEN_LINKS.websiteRegistration} 
-                variant="primary" size="xl" glow
-                className="w-full sm:w-auto min-h-[48px]"
-                iconRight={<ArrowRight className="w-5 h-5" />}
-              >
-                Register on Website
-              </Button>
-              <Button 
-                as="a" href={NEXZEN_LINKS.unstopRegistration} target="_blank" rel="noopener noreferrer"
+                as="a"
+                href={NEXZEN_LINKS.unstopRegistration !== '#' ? NEXZEN_LINKS.unstopRegistration : undefined}
+                target={NEXZEN_LINKS.unstopRegistration !== '#' ? "_blank" : undefined}
+                rel="noopener noreferrer"
                 variant="glass" size="xl"
                 className="w-full sm:w-auto min-h-[48px]"
                 iconRight={<ExternalLink className="w-5 h-5" />}
+                onClick={handleLinkClick(NEXZEN_LINKS.unstopRegistration, 'Coming Soon on Unstop', 'The official Unstop registration link will be active shortly! Please register on our website in the meantime.')}
               >
                 Register on Unstop
               </Button>
@@ -440,9 +454,21 @@ export default function NexzenHackathonPage() {
                     </h4>
                     <p className="text-sm text-gray-400 mt-1 mb-3">{step.description}</p>
                     {step.link && (
-                      <a href={step.link} target="_blank" rel="noopener noreferrer" className="text-cyan-400 text-xs hover:underline inline-flex items-center gap-1">
-                        Complete Step <ExternalLink className="w-3 h-3" />
-                      </a>
+                      step.link.startsWith('/') ? (
+                        <Link to={step.link} className="text-cyan-400 text-xs hover:underline inline-flex items-center gap-1">
+                          Complete Step <ArrowRight className="w-3 h-3" />
+                        </Link>
+                      ) : (
+                        <a 
+                          href={step.link !== '#' ? step.link : undefined}
+                          target={step.link !== '#' ? "_blank" : undefined}
+                          rel="noopener noreferrer"
+                          onClick={handleLinkClick(step.link, step.title, 'The link for this step will be active once registration opens.')}
+                          className="text-cyan-400 text-xs hover:underline inline-flex items-center gap-1 cursor-pointer"
+                        >
+                          Complete Step <ExternalLink className="w-3 h-3" />
+                        </a>
+                      )
                     )}
                   </div>
                 </motion.div>
@@ -493,7 +519,11 @@ export default function NexzenHackathonPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
             {NEXZEN_VERIFICATION.map((ver, i) => (
               <a 
-                key={i} href={ver.link} target="_blank" rel="noopener noreferrer"
+                key={i}
+                href={ver.link !== '#' ? ver.link : undefined}
+                target={ver.link !== '#' ? "_blank" : undefined}
+                rel="noopener noreferrer"
+                onClick={handleLinkClick(ver.link, `${ver.platform} Verification`, `The official link for ${ver.platform} will be posted here soon.`)}
                 className="glass card-hover p-6 rounded-xl flex flex-col items-center text-center group cursor-pointer block"
               >
                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">{ver.icon}</div>
@@ -504,7 +534,15 @@ export default function NexzenHackathonPage() {
           </div>
           
           <div className="mt-8 text-center">
-            <Button as="a" href={NEXZEN_LINKS.googleForm} target="_blank" rel="noopener noreferrer" variant="primary" iconRight={<ArrowRight className="w-4 h-4" />}>
+            <Button 
+              as="a"
+              href={NEXZEN_LINKS.googleForm !== '#' ? NEXZEN_LINKS.googleForm : undefined}
+              target={NEXZEN_LINKS.googleForm !== '#' ? "_blank" : undefined}
+              rel="noopener noreferrer"
+              variant="primary"
+              iconRight={<ArrowRight className="w-4 h-4" />}
+              onClick={handleLinkClick(NEXZEN_LINKS.googleForm, 'Verification Form', 'The verification submission form will open for all registered teams prior to the deadline.')}
+            >
               Submit Verification Proof
             </Button>
             <p className="text-xs text-gray-500 mt-3">Requires screenshots uploaded to Google Form</p>
@@ -547,7 +585,15 @@ export default function NexzenHackathonPage() {
             <Button as="a" href={`mailto:${NEXZEN_LINKS.supportEmail}`} variant="glass" icon={<Mail className="w-4 h-4" />}>
               {NEXZEN_LINKS.supportEmail}
             </Button>
-            <Button as="a" href={NEXZEN_LINKS.whatsappGroup} target="_blank" rel="noopener noreferrer" variant="glass" icon={<MessageCircle className="w-4 h-4" />}>
+            <Button 
+              as="a"
+              href={NEXZEN_LINKS.whatsappGroup !== '#' ? NEXZEN_LINKS.whatsappGroup : undefined}
+              target={NEXZEN_LINKS.whatsappGroup !== '#' ? "_blank" : undefined}
+              rel="noopener noreferrer"
+              variant="glass"
+              icon={<MessageCircle className="w-4 h-4" />}
+              onClick={handleLinkClick(NEXZEN_LINKS.whatsappGroup, 'WhatsApp Community', 'Official WhatsApp group invite link will be emailed to registered participants and updated here soon.')}
+            >
               Join WhatsApp Group
             </Button>
           </div>
