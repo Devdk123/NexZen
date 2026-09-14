@@ -185,7 +185,7 @@ export default function NexzenHackathonPage() {
           <SectionHeader 
             eyebrow="TRACKS"
             title={<>Hackathon <span className="gradient-text">Themes</span></>}
-            subtitle="Choose a track that aligns with your passion or build anything under Open Innovation."
+            subtitle="Choose a track that aligns with your domain to build innovative, impactful solutions."
           />
           
           <motion.div 
