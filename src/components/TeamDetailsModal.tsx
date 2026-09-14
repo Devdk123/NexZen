@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Users, UserPlus, Github, Linkedin, Copy } from 'lucide-react';
+import { X, Users, UserPlus, ExternalLink, Copy } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Badge } from './ui/Badge';
 import { useToast } from './ui/Toast';

@@ -12,6 +12,7 @@ import { cn } from '../../utils';
 
 const NAV_LINKS = [
   { to: '/hackathons', label: 'Hackathons' },
+  { to: '/nexzen-2026', label: 'NEXZEN 2026' },
   { to: '/events', label: 'Events' },
   { to: '/sponsors', label: 'Sponsors' },
   { to: '/about', label: 'About' },
@@ -260,6 +261,9 @@ export function Navbar() {
                 </>
               ) : (
                 <div className="hidden md:flex items-center gap-2">
+                  <Link to="/nexzen-2026">
+                    <Button variant="primary" size="sm" glow>Register Now</Button>
+                  </Link>
                   <Button variant="ghost" size="sm" onClick={() => navigate('/login')}>Log In</Button>
                   <Button variant="primary" size="sm" onClick={() => navigate('/signup')}>Sign Up</Button>
                 </div>
