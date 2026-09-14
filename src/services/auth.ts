@@ -87,7 +87,7 @@ export const authService = {
     return { user: newUser, token: 'mock_token_' + Date.now() };
   },
 
-  async signInWithGoogle(): Promise<AuthResponse> {
+  async signInWithGoogle(): Promise<AuthResponse | null> {
     if (hasSupabase && supabase) {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
@@ -95,15 +95,16 @@ export const authService = {
           redirectTo: window.location.origin + '/dashboard',
         }
       });
-      if (error) throw { message: error.message } as AuthError;
-      return new Promise(() => {});
+        if (error) throw { message: error.message } as AuthError;
+        if (data.url) window.location.assign(data.url);
+        return null;
     }
 
     await delay(1200);
     return { user: MOCK_USERS[0], token: 'mock_google_token_' + Date.now() };
   },
 
-  async signInWithGithub(): Promise<AuthResponse> {
+  async signInWithGithub(): Promise<AuthResponse | null> {
     if (hasSupabase && supabase) {
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
@@ -111,8 +112,9 @@ export const authService = {
           redirectTo: window.location.origin + '/dashboard',
         }
       });
-      if (error) throw { message: error.message } as AuthError;
-      return new Promise(() => {});
+        if (error) throw { message: error.message } as AuthError;
+        if (data.url) window.location.assign(data.url);
+        return null;
     }
 
     await delay(1200);

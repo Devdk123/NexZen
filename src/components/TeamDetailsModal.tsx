@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Users, UserPlus, ExternalLink, Copy } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Badge } from './ui/Badge';
 import { useToast } from './ui/Toast';
@@ -102,12 +101,12 @@ export function TeamDetailsModal({ team, currentUserId, onClose }: TeamDetailsMo
                       <div className="flex gap-2">
                         {member.github && (
                           <a href={member.github} target="_blank" rel="noopener noreferrer" className="p-2 text-nexzen-muted hover:text-white bg-white/5 rounded-lg transition-colors" title="GitHub">
-                            <Github size={16} />
+                            <Code2 size={16} />
                           </a>
                         )}
                         {member.linkedin && (
                           <a href={member.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 text-nexzen-muted hover:text-blue-400 bg-white/5 rounded-lg transition-colors" title="LinkedIn">
-                            <Linkedin size={16} />
+                            <Briefcase size={16} />
                           </a>
                         )}
                       </div>
